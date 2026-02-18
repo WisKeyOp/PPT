@@ -1,0 +1,15 @@
+python-pptx
+python-docx
+langgraph
+langchain-openai
+langchain-anthropic
+langchain-google-genai
+pydantic
+openai
+anthropic
+python-dotenv
+azure-identity
+azure-keyvault-secrets
+streamlit>=1.30.0
+flask>=3.0.0
+werkzeug>=3.0.0
