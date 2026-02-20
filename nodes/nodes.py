@@ -1,7 +1,7 @@
 import json
 from pydantic import BaseModel, Field
 from typing import List
-from langchain_openai import ChatOpenAI
+from auth_helper import get_llm
 from state import PPTState
 
 # --- Internal Structured Models ---
@@ -21,7 +21,7 @@ class ArchitecturePlan(BaseModel):
 
 def content_distiller_node(state: PPTState):
     """Segment raw text into slide-sized chunks."""
-    llm = ChatOpenAI(model="gpt-4o", temperature=0.2)
+    llm = get_llm(deployment_name="gpt-4o", temperature=0.2)
     slide_count = len(state['registry'].get('slides', []))
     
     # Logic: Prompt LLM to create 'storyboard' summaries
@@ -30,7 +30,7 @@ def content_distiller_node(state: PPTState):
 
 def structural_architect_node(state: PPTState):
     """Maps summaries to specific Registry IDs using geometric logic."""
-    llm = ChatOpenAI(model="gpt-4o", temperature=0)
+    llm = get_llm(deployment_name="gpt-4o", temperature=0)
     structured_llm = llm.with_structured_output(ArchitecturePlan)
 
     prompt = f"Map this content: {state['storyboard']} to these IDs: {state['registry']}"
